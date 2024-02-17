@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #3498db; /* A vibrant shade of blue */
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #search-container {
+            position: relative;
+        }
+
+        #search-input {
+            padding: 10px;
+            width: 300px;
+            border: none;
+            border-radius: 20px;
+            outline: none;
+            font-size: 16px;
+        }
+
+        #search-bar {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        .search-option {
+            padding: 8px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        #related-search {
+            margin-top: 20px;
+            color: #555;
+        }
+    </style>
+    <script>
+        function toggleSearch() {
+            var searchBar = document.getElementById("search-bar");
+            searchBar.style.display = "block";
+            updateRelatedSearch();
+        }
+
+        function updateRelatedSearch() {
+            var searchTerm = document.getElementById("search-input").value.toLowerCase();
+            var relatedSearchContainer = document.getElementById("related-search");
+            relatedSearchContainer.innerHTML = "";
+
+            if (searchTerm.length > 0) {
+                // Simulate fetching related searches from an API or database
+                var relatedSearches = getRelatedSearches(searchTerm);
+
+                relatedSearches.forEach(function (relatedSearch) {
+                    var searchOption = document.createElement("div");
+                    searchOption.className = "search-option";
+                    searchOption.innerText = relatedSearch;
+                    searchOption.onclick = function () {
+                        document.getElementById("search-input").value = relatedSearch;
+                        document.getElementById("search-bar").style.display = "none";
+                        // Perform search or other actions here
+                    };
+                    relatedSearchContainer.appendChild(searchOption);
+                });
+            } else {
+                document.getElementById("search-bar").style.display = "none";
+            }
+        }
+
+        function getRelatedSearches(searchTerm) {
+            // Replace this with your logic to fetch related searches from an API or database
+            // For now, using some example data
+            return [
+                "Movies related to " + searchTerm,
+                "Music related to " + searchTerm,
+                "Top " + searchTerm + " songs",
+                searchTerm + " movie series",
+            ];
+        }
+    </script>
+</head>
+<body>
+
+<div id="search-container">
+    <input type="text" id="search-input" placeholder="Search here" oninput="toggleSearch()">
+    <div id="search-bar">
+        <div id="related-search"></div>
+    </div>
+</div>
+
+</body>
+</html>
